@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
-  scrollSpeed: -0.5
+  scrollSpeed: 0.65
 --- !u!114 &8771599180368840726
 MonoBehaviour:
   m_ObjectHideFlags: 0

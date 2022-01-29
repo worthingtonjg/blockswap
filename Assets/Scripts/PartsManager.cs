@@ -36,10 +36,8 @@ public class PartsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var spawnerList = GameObject.FindObjectsOfType<PartSpawner>();
-        spawners = spawnerList.ToDictionary(k => k.Owner, v => v);
-
         InitializeParts();
+        InitializeSpawners();
     }
 
     private void InitializeParts()
@@ -54,6 +52,23 @@ public class PartsManager : MonoBehaviour
             {
                 var instance = GameObject.Instantiate(prefab, new Vector3(1000, 1000, 1000), Quaternion.identity);
                 AvialableParts.Add(instance);
+            }
+        }
+    }
+
+    private void InitializeSpawners()
+    {
+        var spawnerList = GameObject.FindObjectsOfType<PartSpawner>();
+        spawners = spawnerList.ToDictionary(k => k.Owner, v => v);
+
+        print($"InitializeSpawners: {spawners.Count}");
+        
+        foreach(var spawner in spawnerList)
+        {
+            for(int i = 0; i < StartingCount; i++)
+            {
+                var part = TakePart();
+                spawner.AddPartToMachine(part);
             }
         }
     }
