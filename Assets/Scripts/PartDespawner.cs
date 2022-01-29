@@ -27,7 +27,12 @@ public class PartDespawner : MonoBehaviour
         var part = other.gameObject.GetComponent<Part>();
         if(part != null)
         {
-            spawners[Owner].ConveyerToMachine();
+            print($"ConveyerToMachine: {other.gameObject.name}");
+            spawners[Owner].ConveyerToMachine(other.gameObject);
+        }
+        else
+        {
+            print($"Ignored: {other.gameObject.name}");
         }
     }
 }

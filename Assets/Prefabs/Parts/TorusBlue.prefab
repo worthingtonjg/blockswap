@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8595178368285469331}
   - component: {fileID: 465923839865162720}
   - component: {fileID: 8771599180368840726}
+  - component: {fileID: 3130435643610760520}
   m_Layer: 0
   m_Name: TorusBlue
   m_TagString: Untagged
@@ -125,3 +126,16 @@ MonoBehaviour:
   Owner: 0
   Color: 0
   Shape: 3
+--- !u!65 &3130435643610760520
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029515168268720497}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.98935574, y: 0.19787125, z: 0.98935616}
+  m_Center: {x: 0, y: 0.00000007450582, z: 0.000000044703494}

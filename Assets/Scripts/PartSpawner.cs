@@ -84,10 +84,8 @@ public class PartSpawner : MonoBehaviour
         return part;
     }
 
-    public GameObject ConveyerToMachine()
+    public GameObject ConveyerToMachine(GameObject part)
     {
-        var part = PartsOnConveyer.LastOrDefault();
-
         PartsOnConveyer.Remove(part);
         PartsInMachine.Insert(0, part);
 
