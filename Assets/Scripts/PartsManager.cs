@@ -97,7 +97,11 @@ public class PartsManager : MonoBehaviour
         var partComponent = part.GetComponent<Part>();
         if(match)
         {
-            
+            spawners[partComponent.Owner].RemovePartFromPlay(part);
+        }
+        else
+        {
+            spawners[partComponent.Owner].AddPartToMachine(part);
         }
     }
 }

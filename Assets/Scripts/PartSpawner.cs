@@ -96,5 +96,10 @@ public class PartSpawner : MonoBehaviour
 
         return part;
     }
+
+    public void RemovePartFromPlay(GameObject part)
+    {
+        PartsInPlay.Remove(part);
+    }
 }
 
