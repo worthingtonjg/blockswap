@@ -82,7 +82,7 @@ public class PartsManager : MonoBehaviour
         var partComponent = part.GetComponent<Part>();
         if(match)
         {
-            
+               
         }
     }
 }

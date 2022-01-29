@@ -17,8 +17,11 @@ public class PartMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var offset = Time.deltaTime * scrollSpeed;
-        var destPos = new Vector3(destination.transform.position.x, transform.position.y, destination.transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, destPos, offset);
+        if(destination != null)
+        {
+            var offset = Time.deltaTime * scrollSpeed;
+            var destPos = new Vector3(destination.transform.position.x, transform.position.y, destination.transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, destPos, offset);
+        }
     }
 }
