@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
         
     }
 
-    void PointToPart(part part)
+    void PointToPart(Part part)
     {
         CameraPosition = (int)part.Shape * 4 + (int)part.Color;
         SetCameraPosition();
