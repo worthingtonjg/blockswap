@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class partMove : MonoBehaviour
+public class PartMove : MonoBehaviour
 {
     public GameObject destination;
 

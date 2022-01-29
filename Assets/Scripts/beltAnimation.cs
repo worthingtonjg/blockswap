@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class beltAnimation : MonoBehaviour
+public class BeltAnimation : MonoBehaviour
 {
     public float scrollSpeed = -0.5f;
     Renderer rend;
