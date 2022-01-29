@@ -62,7 +62,7 @@ public class PartsManager : MonoBehaviour
         spawners = spawnerList.ToDictionary(k => k.Owner, v => v);
 
         print($"InitializeSpawners: {spawners.Count}");
-        
+
         foreach(var spawner in spawnerList)
         {
             for(int i = 0; i < StartingCount; i++)
@@ -97,7 +97,7 @@ public class PartsManager : MonoBehaviour
         var partComponent = part.GetComponent<Part>();
         if(match)
         {
-               
+            
         }
     }
 }

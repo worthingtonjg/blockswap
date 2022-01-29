@@ -86,6 +86,11 @@ public class PartSpawner : MonoBehaviour
 
     public GameObject ConveyerToMachine(GameObject part)
     {
+        part.transform.position = new Vector3(1000,1000,1000);
+
+        var partMoveComponent = part.GetComponent<PartMove>();
+        partMoveComponent.destination = null;
+
         PartsOnConveyer.Remove(part);
         PartsInMachine.Insert(0, part);
 
