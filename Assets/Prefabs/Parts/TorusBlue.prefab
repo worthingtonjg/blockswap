@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4506097796782924463}
   - component: {fileID: 8595178368285469331}
   - component: {fileID: 465923839865162720}
+  - component: {fileID: 8771599180368840726}
   m_Layer: 0
   m_Name: TorusBlue
   m_TagString: Untagged
@@ -109,3 +110,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   scrollSpeed: -0.5
+--- !u!114 &8771599180368840726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029515168268720497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05df34c65e928a94ca3e6681565ce3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: 0
+  Color: 0
+  Shape: 3
