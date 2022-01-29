@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5819379287955255883}
   - component: {fileID: 270193092347293160}
   m_Layer: 0
-  m_Name: P1PartDespawner
+  m_Name: PartDespawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db3555ef3704db846a7d9fc712f5b472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Owner: 1
+  Owner: 0

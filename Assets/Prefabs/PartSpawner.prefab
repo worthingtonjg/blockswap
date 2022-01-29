@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5464993001452285728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -108,5 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45727c396376b1943a2c71d0c936be63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartCount: 7
-  PartPrefabs: []
+  SpawnRate: 3
+  PartsInMachine: []
+  PartCount: {fileID: 0}
+  PartsOnConveyer: []
+  PartsInPlay: []
+  Destination: {fileID: 0}
+  Owner: 0
