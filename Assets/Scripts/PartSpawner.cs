@@ -29,7 +29,7 @@ public class PartSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnNextPartInMachine", SpawnRate, SpawnRate);
+        InvokeRepeating("SpawnNextPartInMachine", 0f, SpawnRate);
     }
 
     void Update()
