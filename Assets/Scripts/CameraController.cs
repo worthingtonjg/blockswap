@@ -5,6 +5,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public int CameraPosition;
+    private float gap = 4.0f;
+    private float offset = 21.62f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,6 @@ public class CameraController : MonoBehaviour
 
     void SetCameraPosition() 
     {
-        transform.position = new Vector3(CameraPosition * 2.0f -21.62f, transform.position.y, transform.position.z);
+        transform.position = new Vector3(CameraPosition * gap - offset, transform.position.y, transform.position.z);
     }
 }
