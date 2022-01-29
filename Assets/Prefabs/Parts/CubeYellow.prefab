@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 423679149028413780}
   - component: {fileID: 2698207195068049499}
   - component: {fileID: 2901442867008826015}
+  - component: {fileID: 4110278467126211026}
   m_Layer: 0
   m_Name: CubeYellow
   m_TagString: Untagged
@@ -124,3 +125,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
   scrollSpeed: -0.5
+--- !u!114 &4110278467126211026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046042862849759660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05df34c65e928a94ca3e6681565ce3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: 0
+  Color: 3
+  Shape: 0
