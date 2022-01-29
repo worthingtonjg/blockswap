@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class PartSpawner : MonoBehaviour
 {
     public float SpawnRate = 3f;
     public List<GameObject> PartsInMachine;
+
+    public TMP_Text PartCount;
 
     public List<GameObject> PartsOnConveyer;
 
@@ -18,9 +21,9 @@ public class PartSpawner : MonoBehaviour
 
     void Awake()
     {
-            PartsInMachine = new List<GameObject>();
-            PartsOnConveyer = new List<GameObject>();
-            PartsInPlay = new List<GameObject>();    
+        PartsInMachine = new List<GameObject>();
+        PartsOnConveyer = new List<GameObject>();
+        PartsInPlay = new List<GameObject>();    
     }
 
     // Start is called before the first frame update
@@ -48,9 +51,9 @@ public class PartSpawner : MonoBehaviour
         }
     }
 
-    public int PartCount()
+    public void UpdatePartCount()
     {
-        return PartsInMachine.Count + PartsOnConveyer.Count + PartsInPlay.Count;
+        PartCount.text = (PartsInMachine.Count + PartsOnConveyer.Count + PartsInPlay.Count).ToString();
     }
 
     public void AddPartToMachine(GameObject part)
@@ -66,12 +69,16 @@ public class PartSpawner : MonoBehaviour
         
         PartsInMachine.Insert(0, part);
         print($"PartsInMachine: {PartsInMachine.Count}");
+
+        UpdatePartCount();
     }
 
     public void TakePartFromConveyer(GameObject part)
     {
         PartsOnConveyer.Remove(part);
         PartsInPlay.Add(part);
+
+        UpdatePartCount();
     }
 
     public GameObject MachineToConveyer()
@@ -80,6 +87,8 @@ public class PartSpawner : MonoBehaviour
 
         PartsInMachine.Remove(part);
         PartsOnConveyer.Insert(0, part);
+
+        UpdatePartCount();
 
         return part;
     }
@@ -94,12 +103,16 @@ public class PartSpawner : MonoBehaviour
         PartsOnConveyer.Remove(part);
         PartsInMachine.Insert(0, part);
 
+        UpdatePartCount();
+
         return part;
     }
 
     public void RemovePartFromPlay(GameObject part)
     {
         PartsInPlay.Remove(part);
+
+        UpdatePartCount();
     }
 }
 
