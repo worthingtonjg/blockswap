@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
 
     private CharacterController characterController;
     private float yaw = 0f;
+    private bool isHoldingPart = false;
 
     void Awake()
     {
@@ -37,12 +38,19 @@ public class PlayerMove : MonoBehaviour
         //this.transform.Translate((Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick"))*speed*Time.deltaTime, 0, (Input.GetAxis(tag+"Vertical")+Input.GetAxis(tag+"VerticalJoystick"))*speed*Time.deltaTime);
 
         FindNearestPart();
-        if (Input.GetButtonDown("P1Pickup"))
+        if (!isHoldingPart && Input.GetButtonDown("P1Pickup"))
         {
             if (NearestPart != null)
             {
                 NearestPart.transform.SetParent(gameObject.transform);
+                NearestPart.GetComponent<PartMove>().destination = null;
+                isHoldingPart = true;
             }
+        }
+        else if (isHoldingPart && Input.GetButtonDown("P1Pickup"))
+        {
+            NearestPart.transform.SetParent(null);
+            isHoldingPart = false;
         }
     }
 
