@@ -42,6 +42,8 @@ public class PlayerMove : MonoBehaviour
             if (NearestPart != null)
             {
                 NearestPart.transform.SetParent(gameObject.transform);
+                NearestPart.GetComponent<PartMove>().destination = null;
+                
             }
         }
     }
