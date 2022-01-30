@@ -12,7 +12,8 @@ public class PartsManager : MonoBehaviour
     public TMP_Text CountDown;
 
     public GameObject GameOverCanvas;
-    public TMP_Text GameOverText;
+    public GameObject RedWinsImage;
+    public GameObject BlueWinsImage;
 
     public List<GameObject> PartPrefabs;
 
@@ -153,11 +154,11 @@ public class PartsManager : MonoBehaviour
         GameOverCanvas.SetActive(true);
         if(winner == EnumPlayer.P1)
         {
-            GameOverText.text = "Player 1 Wins";
+            BlueWinsImage.SetActive(true);
         }
         else
         {
-            GameOverText.text = "Player 2 Wins";
+            RedWinsImage.SetActive(true);
         }
         SoundEffectsManager.Instance.PlayGameOver();
     }
