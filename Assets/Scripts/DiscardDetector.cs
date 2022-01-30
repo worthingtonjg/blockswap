@@ -20,23 +20,14 @@ public class DiscardDetector : MonoBehaviour
         if (part == null) { return;}
 
         var lastPlayedPart = CameraController.Instance.LastPlayedPart;
-        print($"***: {lastPlayedPart}");
 
         bool match = false;
-        Debug.Log("COLLISION!!!!!!!");
-        if (part != null) {Debug.Log("Owner of shape is " + part.Owner);}
         if (part != null && lastPlayedPart != null && (part.Color == lastPlayedPart.Color || part.Shape == lastPlayedPart.Shape)) 
         {
-            Debug.Log("WE HAVE A MATCH");
             match = true;
             CameraController.Instance.PointToPart(part);
         }
-        else if (part != null && lastPlayedPart != null)
-        {
-            Debug.Log("Looking for " + lastPlayedPart.Color + " " + lastPlayedPart.Shape +
-            ", but found " + part.Color + " " + part.Shape);
-        }
-        else
+        else if (part == null || lastPlayedPart == null)
         {
             if (part == null) {Debug.Log("part is null");}
             if (lastPlayedPart == null) {Debug.Log("lastPlayedPart is null");}
