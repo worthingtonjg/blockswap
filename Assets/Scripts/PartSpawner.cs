@@ -67,6 +67,7 @@ public class PartSpawner : MonoBehaviour
         var partMoveComponent = part.GetComponent<PartMove>();
         partMoveComponent.destination = null;
         
+        PartsInPlay.Remove(part);
         PartsInMachine.Insert(0, part);
         //print($"PartsInMachine: {PartsInMachine.Count}");
 

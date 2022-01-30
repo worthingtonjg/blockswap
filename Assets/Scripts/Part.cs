@@ -7,8 +7,8 @@ public class Part : MonoBehaviour
     public EnumPlayer Owner;
     public EnumPartColor Color;
     public EnumPartShape Shape;
-
     public GameObject Selector;
+    public bool CanSelect = true;
 
     public void ToggleSelected(bool selected)
     {
