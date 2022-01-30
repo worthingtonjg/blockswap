@@ -10,6 +10,7 @@ public class PartSpawner : MonoBehaviour
     public List<GameObject> PartsInMachine;
 
     public TMP_Text PartCount;
+    public TMP_Text Message;
 
     public List<GameObject> PartsOnConveyer;
 
@@ -56,6 +57,20 @@ public class PartSpawner : MonoBehaviour
         PartCount.text = (PartsInMachine.Count + PartsOnConveyer.Count + PartsInPlay.Count).ToString();
     }
 
+    public IEnumerator ShowMessage(string message, int penalty = 0)
+    {
+        Message.text = message;
+        yield return new WaitForSeconds(3f);
+
+        for(int i=0; i<penalty; i++)
+        {
+            var part = PartsManager.Instance.TakePart();
+            AddPartToMachine(part);
+        }
+
+        Message.text = string.Empty;
+    }
+
     public void AddPartFromButton(GameObject part)
     {
         part.transform.position = new Vector3(1000,1000,1000);
@@ -71,7 +86,7 @@ public class PartSpawner : MonoBehaviour
         UpdatePartCount();
     }
 
-    public void AddPartToMachine(GameObject part)
+    public void AddPartToMachine(GameObject part, string message = null, int? penalty = null)
     {
         //print($"AddPartToMachine: {Owner}");
         part.transform.position = new Vector3(1000,1000,1000);
@@ -85,6 +100,11 @@ public class PartSpawner : MonoBehaviour
         PartsInPlay.Remove(part);
         PartsInMachine.Insert(0, part);
         //print($"PartsInMachine: {PartsInMachine.Count}");
+
+        if(!string.IsNullOrEmpty(message))
+        {
+            StartCoroutine(ShowMessage(message, penalty ?? 0));
+        }
 
         UpdatePartCount();
     }

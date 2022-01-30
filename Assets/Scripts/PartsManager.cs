@@ -103,7 +103,7 @@ public class PartsManager : MonoBehaviour
         else
         {
             print("not matched");
-            spawners[partComponent.Owner].AddPartToMachine(part);
+            spawners[partComponent.Owner].AddPartToMachine(part, "Invalid Part Penalty: +2 Parts", 2);
         }
     }
 }

@@ -45,21 +45,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //yaw += Input.GetAxis("Mouse X") * rotationSpeed;
-        Vector3 moveDir = transform.forward * (Input.GetAxis(tag+"Vertical")+Input.GetAxis(tag+"VerticalJoystick")) * moveSpeed;
-        
-        //transform.eulerAngles = new Vector3(0f, yaw, 0f);
-        moveDir += transform.right * (Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick")) * moveSpeed;        
-
-        yaw += (Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick")) * rotationSpeed;
-        //transform.eulerAngles = new Vector3(0f, yaw, 0f);
-
-        //Model.transform.Rotate(Vector3.up, yaw, Space.World);
-
-        characterController.SimpleMove(moveDir);
-
-        //this.transform.Translate((Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick"))*speed*Time.deltaTime, 0, (Input.GetAxis(tag+"Vertical")+Input.GetAxis(tag+"VerticalJoystick"))*speed*Time.deltaTime);
-
+        MoveCharacter();
         FindNearestPart();
 
         if(Input.GetButtonDown(tag+"Pickup"))
@@ -84,32 +70,45 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
+
+    private void MoveCharacter()
+    {
+        Vector3 moveDir = transform.forward * (Input.GetAxis(tag+"Vertical")+Input.GetAxis(tag+"VerticalJoystick")) * moveSpeed;
+        
+        moveDir += transform.right * (Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick")) * moveSpeed;        
+
+        yaw += (Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick")) * rotationSpeed;
+
+        characterController.SimpleMove(moveDir);
+    }
+
     private void PressNewPartButton()
     {
         var part = PartsManager.Instance.TakePart();
         spawners[playerName].AddPartFromButton(part);
         DeactivateButton();
-        SelectedPart = part;
-        NearestPart = null;
-        SelectedPart.transform.SetParent(gameObject.transform);
-        SelectedPart.GetComponent<PartMove>().destination = null;
-        isHoldingPart = true;
-        SelectedPart.transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
+        SetSelectedPart(part);
     }
 
     private void PickupPartFromConveyor()
     {
-        SelectedPart = NearestPart;
-        NearestPart = null;
+        spawners[playerName].TakePartFromConveyer(NearestPart);
+        SetSelectedPart(NearestPart);
+    }
 
-        SelectedPart.transform.SetParent(gameObject.transform);
-        SelectedPart.GetComponent<PartMove>().destination = null;
+    private void SetSelectedPart(GameObject part)
+    {
+        SelectedPart = part;
+
+        NearestPart = null;
         NearParts.Remove(SelectedPart);
 
         SelectedPart.GetComponent<Part>().ToggleSelected(false);
-        spawners[playerName].TakePartFromConveyer(SelectedPart);
-        isHoldingPart = true;
+        SelectedPart.transform.SetParent(gameObject.transform);
+        SelectedPart.GetComponent<PartMove>().destination = null;
         SelectedPart.transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
+
+        isHoldingPart = true;
     }
 
     private void DropPart()
@@ -123,7 +122,7 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            spawners[playerName].AddPartToMachine(SelectedPart);
+            spawners[playerName].AddPartToMachine(SelectedPart,"Part returned to Inventory");
         }
 
         SelectedPart = null;
