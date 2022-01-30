@@ -23,7 +23,7 @@ public class PartsManager : MonoBehaviour
     {
         get 
         {
-            if(_instance)
+            if(_instance == null)
             {
                 _instance = GameObject.FindObjectOfType<PartsManager>();
             }
