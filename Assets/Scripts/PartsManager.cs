@@ -48,16 +48,19 @@ public class PartsManager : MonoBehaviour
 
     private IEnumerator CountDownToStart()
     {
-        CountDown.text = "Starting in 3 ... ";
-        yield return new WaitForSeconds(1f);
-        CountDown.text = "Starting in 2 ... ";
-        yield return new WaitForSeconds(1f);
-        CountDown.text = "Starting in 1 ... ";
-        yield return new WaitForSeconds(1f);
-        CountDown.text = "Play!";
-        yield return new WaitForSeconds(1f);        
-        CountDownCanvas.SetActive(false);
-        GameStarted = true;
+        if(CountDownCanvas != null)
+        {
+            CountDown.text = "Starting in 3 ... ";
+            yield return new WaitForSeconds(1f);
+            CountDown.text = "Starting in 2 ... ";
+            yield return new WaitForSeconds(1f);
+            CountDown.text = "Starting in 1 ... ";
+            yield return new WaitForSeconds(1f);
+            CountDown.text = "Play!";
+            yield return new WaitForSeconds(1f);        
+            CountDownCanvas.SetActive(false);
+            GameStarted = true;
+        }
     }
 
     private void InitializeParts()
