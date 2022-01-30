@@ -37,6 +37,13 @@ public class PlayerMove : MonoBehaviour
         //this.transform.Translate((Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick"))*speed*Time.deltaTime, 0, (Input.GetAxis(tag+"Vertical")+Input.GetAxis(tag+"VerticalJoystick"))*speed*Time.deltaTime);
 
         FindNearestPart();
+        if (Input.GetButtonDown("P1Pickup"))
+        {
+            if (NearestPart != null)
+            {
+                NearestPart.transform.SetParent(gameObject.transform);
+            }
+        }
     }
 
     private void FindNearestPart()
@@ -81,6 +88,7 @@ public class PlayerMove : MonoBehaviour
         var part = other.gameObject.GetComponent<Part>();
         if(part != null)
         {
+            part.ToggleSelected(false);
             NearParts.Remove(other.gameObject);
         }        
     }
