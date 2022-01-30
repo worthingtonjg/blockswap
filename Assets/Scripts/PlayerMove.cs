@@ -53,6 +53,18 @@ public class PlayerMove : MonoBehaviour
                 //print($"Nearest: {part.name}");
             }
         }
+
+        foreach(var part in NearParts)
+        {
+            var partComponent = part.GetComponent<Part>();
+            partComponent.ToggleSelected(false);
+        }
+
+        if(NearestPart != null)
+        {
+            var partComponent = NearestPart.GetComponent<Part>();
+            partComponent.ToggleSelected(true);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
