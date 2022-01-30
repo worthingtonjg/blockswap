@@ -16,9 +16,6 @@ public class PartsManager : MonoBehaviour
 
     public List<GameObject> UsedParts;
 
-    public AudioClip beep1;
-    public AudioClip beep2;
-
     public int CountOfEach = 5;
 
     public int StartingCount = 5;
@@ -26,8 +23,6 @@ public class PartsManager : MonoBehaviour
     private Dictionary<EnumPlayer, PartSpawner> spawners;
 
     private static PartsManager _instance;
-
-    private AudioSource beeps;
 
     public static PartsManager Instance 
     {
@@ -46,7 +41,6 @@ public class PartsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        beeps = FindObjectOfType<AudioSource>();
         InitializeParts();
         InitializeSpawners();
         StartCoroutine(CountDownToStart());
@@ -58,17 +52,17 @@ public class PartsManager : MonoBehaviour
         {
             CountDown.text = "Starting in 3 ... ";
             yield return new WaitForSeconds(.3f);
-            beeps.PlayOneShot(beep1);
+            SoundEffectsManager.Instance.PlayBeep1();
             yield return new WaitForSeconds(1f);
-            beeps.PlayOneShot(beep1);
+            SoundEffectsManager.Instance.PlayBeep1();
             CountDown.text = "Starting in 2 ... ";
             yield return new WaitForSeconds(1f);
-            beeps.PlayOneShot(beep1);
+            SoundEffectsManager.Instance.PlayBeep1();
             CountDown.text = "Starting in 1 ... ";
-            beeps.PlayOneShot(beep1);
+            SoundEffectsManager.Instance.PlayBeep1();
             yield return new WaitForSeconds(1f);
             CountDown.text = "Play!";
-            beeps.PlayOneShot(beep2);
+            SoundEffectsManager.Instance.PlayBeep2();
             yield return new WaitForSeconds(1f);        
             CountDownCanvas.SetActive(false);
             GameStarted = true;
@@ -134,11 +128,13 @@ public class PartsManager : MonoBehaviour
         {
             print("matched");
             spawners[partComponent.Owner].RemovePartFromPlay(part);
+            SoundEffectsManager.Instance.PlayGoodMatch();
         }
         else
         {
             print("not matched");
             spawners[partComponent.Owner].AddPartToMachine(part, "Invalid Part Penalty: +2 Parts", 2);
+            SoundEffectsManager.Instance.PlayBadMatch();
         }
     }
 }

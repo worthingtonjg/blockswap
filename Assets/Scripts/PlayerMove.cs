@@ -74,7 +74,7 @@ public class PlayerMove : MonoBehaviour
     private void MoveCharacter()
     {
         if(!PartsManager.Instance.GameStarted) return;
-        
+
         Vector3 moveDir = transform.forward * (Input.GetAxis(tag+"Vertical")+Input.GetAxis(tag+"VerticalJoystick")) * moveSpeed;
         
         moveDir += transform.right * (Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick")) * moveSpeed;        
@@ -100,6 +100,8 @@ public class PlayerMove : MonoBehaviour
 
     private void SetSelectedPart(GameObject part)
     {
+        SoundEffectsManager.Instance.PlayPickup();
+
         SelectedPart = part;
 
         NearestPart = null;
@@ -115,6 +117,8 @@ public class PlayerMove : MonoBehaviour
 
     private void DropPart()
     {
+        SoundEffectsManager.Instance.PlayDrop();
+        
         isHoldingPart = false;
         SelectedPart.transform.SetParent(null);
 
