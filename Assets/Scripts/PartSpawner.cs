@@ -56,6 +56,21 @@ public class PartSpawner : MonoBehaviour
         PartCount.text = (PartsInMachine.Count + PartsOnConveyer.Count + PartsInPlay.Count).ToString();
     }
 
+    public void AddPartFromButton(GameObject part)
+    {
+        part.transform.position = new Vector3(1000,1000,1000);
+
+        var partComponent = part.GetComponent<Part>();
+        partComponent.Owner = Owner;
+        
+        var partMoveComponent = part.GetComponent<PartMove>();
+        partMoveComponent.destination = null;
+
+        PartsInPlay.Add(part);
+
+        UpdatePartCount();
+    }
+
     public void AddPartToMachine(GameObject part)
     {
         //print($"AddPartToMachine: {Owner}");

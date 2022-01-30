@@ -11,15 +11,18 @@ public class PlayerMove : MonoBehaviour
     public GameObject SelectedPart;
     public float rotationSpeed = 4f;
     public float moveSpeed = 25f;
-    public float dropRange = 3f;
+    public GameObject Button;
 
     private CharacterController characterController;
     private float yaw = 0f;
     private bool isHoldingPart = false;
+    private bool canPressButton = false;
     private SlotSpawner slotSpawner;
     private GameObject discardPartsConveyor;
-    
     private Dictionary<EnumPlayer, PartSpawner> spawners;
+
+    private GameObject DropZone;
+    private bool CanDropOnMainConveyor = false;
 
     void Awake()
     {
@@ -35,6 +38,8 @@ public class PlayerMove : MonoBehaviour
 
         var spawnerList = GameObject.FindObjectsOfType<PartSpawner>();
         spawners = spawnerList.ToDictionary(k => k.Owner, v => v);
+
+        DropZone = GameObject.FindWithTag("DropZone");
     }
 
     // Update is called once per frame
@@ -57,43 +62,71 @@ public class PlayerMove : MonoBehaviour
 
         FindNearestPart();
 
-        if (!isHoldingPart && (playerName == EnumPlayer.P1 && Input.GetButtonDown("P1Pickup") ||
-            playerName == EnumPlayer.P2 && Input.GetButtonDown("P2Pickup")))
+        if(Input.GetButtonDown(tag+"Pickup"))
         {
-            if (NearestPart != null)
+            if (!isHoldingPart)
             {
-                SelectedPart = NearestPart;
-                NearestPart = null;
-
-                SelectedPart.transform.SetParent(gameObject.transform);
-                SelectedPart.GetComponent<PartMove>().destination = null;
-                NearParts.Remove(SelectedPart);
-
-                SelectedPart.GetComponent<Part>().ToggleSelected(false);
-                spawners[playerName].TakePartFromConveyer(SelectedPart);
-                isHoldingPart = true;
-                SelectedPart.transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
-            }
-        }
-        else if (isHoldingPart && (playerName == EnumPlayer.P1 && Input.GetButtonDown("P1Pickup") ||
-            playerName == EnumPlayer.P2 && Input.GetButtonDown("P2Pickup")))
-        {
-            SelectedPart.transform.SetParent(null);
-            isHoldingPart = false;
-
-            float distanceToConveyor = Mathf.Abs(transform.position.x - discardPartsConveyor.transform.position.x);
-            print($"distanceToConveyor: {distanceToConveyor}");
-            if(distanceToConveyor < dropRange)
-            {
-                slotSpawner.AddPartToSlot(SelectedPart);
+                if(canPressButton)
+                {
+                    PressNewPartButton();
+                } 
+                else 
+                {
+                    if (NearestPart != null)
+                    {
+                        PickupPartFromConveyor();
+                    }
+                }
             }
             else
             {
-                spawners[playerName].AddPartToMachine(SelectedPart);
+                DropPart();
             }
-
-            SelectedPart = null;
         }
+    }
+    private void PressNewPartButton()
+    {
+        var part = PartsManager.Instance.TakePart();
+        spawners[playerName].AddPartFromButton(part);
+        DeactivateButton();
+        SelectedPart = part;
+        NearestPart = null;
+        SelectedPart.transform.SetParent(gameObject.transform);
+        SelectedPart.GetComponent<PartMove>().destination = null;
+        isHoldingPart = true;
+        SelectedPart.transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
+    }
+
+    private void PickupPartFromConveyor()
+    {
+        SelectedPart = NearestPart;
+        NearestPart = null;
+
+        SelectedPart.transform.SetParent(gameObject.transform);
+        SelectedPart.GetComponent<PartMove>().destination = null;
+        NearParts.Remove(SelectedPart);
+
+        SelectedPart.GetComponent<Part>().ToggleSelected(false);
+        spawners[playerName].TakePartFromConveyer(SelectedPart);
+        isHoldingPart = true;
+        SelectedPart.transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
+    }
+
+    private void DropPart()
+    {
+        isHoldingPart = false;
+        SelectedPart.transform.SetParent(null);
+
+        if(CanDropOnMainConveyor)
+        {
+            slotSpawner.AddPartToSlot(SelectedPart);
+        }
+        else
+        {
+            spawners[playerName].AddPartToMachine(SelectedPart);
+        }
+
+        SelectedPart = null;
     }
 
     private void FindNearestPart()
@@ -137,6 +170,16 @@ public class PlayerMove : MonoBehaviour
         {
             NearParts.Add(other.gameObject);
         }
+
+        if(other.tag == "Button")
+        {
+            ActivateButton();
+        }
+
+        if(other.tag == "DropZone")
+        {
+            CanDropOnMainConveyor = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -147,5 +190,29 @@ public class PlayerMove : MonoBehaviour
             part.ToggleSelected(false);
             NearParts.Remove(other.gameObject);
         }        
+    
+        if(other.tag == "Button")
+        {
+            DeactivateButton();
+        }    
+
+        if(other.tag == "DropZone")
+        {
+            CanDropOnMainConveyor = false;
+        }
+    }
+
+    private void ActivateButton()
+    {
+        if(isHoldingPart) return;
+
+        Button.GetComponent<Renderer>().material.color = Color.red;
+        canPressButton = true;
+    }
+
+    private void DeactivateButton()
+    {
+        Button.GetComponent<Renderer>().material.color = Color.white;
+        canPressButton = false;
     }
 }

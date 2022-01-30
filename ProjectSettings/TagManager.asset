@@ -8,6 +8,8 @@ TagManager:
   - P2
   - Slot
   - DiscardPartsConveyor
+  - Button
+  - DropZone
   layers:
   - Default
   - TransparentFX
