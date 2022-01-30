@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     private CharacterController characterController;
     private float yaw = 0f;
     private bool isHoldingPart = false;
+    private EnumPlayer playerName;
 
     void Awake()
     {
@@ -38,7 +39,8 @@ public class PlayerMove : MonoBehaviour
         //this.transform.Translate((Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick"))*speed*Time.deltaTime, 0, (Input.GetAxis(tag+"Vertical")+Input.GetAxis(tag+"VerticalJoystick"))*speed*Time.deltaTime);
 
         FindNearestPart();
-        if (!isHoldingPart && Input.GetButtonDown("P1Pickup"))
+        if (!isHoldingPart && (playerName == EnumPlayer.P1 && Input.GetButtonDown("P1Pickup") ||
+            playerName == EnumPlayer.P2 && Input.GetButtonDown("P2Pickup")))
         {
             if (NearestPart != null)
             {
@@ -47,7 +49,8 @@ public class PlayerMove : MonoBehaviour
                 isHoldingPart = true;
             }
         }
-        else if (isHoldingPart && Input.GetButtonDown("P1Pickup"))
+        else if (isHoldingPart && (playerName == EnumPlayer.P1 && Input.GetButtonDown("P1Pickup") ||
+            playerName == EnumPlayer.P2 && Input.GetButtonDown("P2Pickup")))
         {
             NearestPart.transform.SetParent(null);
             isHoldingPart = false;
@@ -66,6 +69,7 @@ public class PlayerMove : MonoBehaviour
                 closest = distanceToPart;
                 NearestPart = part;
                 //print($"Nearest: {part.name}");
+                playerName = NearestPart.GetComponent<Part>().Owner;
             }
         }
 
