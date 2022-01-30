@@ -117,21 +117,24 @@ public class PlayerMove : MonoBehaviour
 
     private void DropPart()
     {
-        SoundEffectsManager.Instance.PlayDrop();
-        
-        isHoldingPart = false;
-        SelectedPart.transform.SetParent(null);
-
         if(CanDropOnMainConveyor)
         {
-            slotSpawner.AddPartToSlot(SelectedPart);
+            bool success = slotSpawner.AddPartToSlot(SelectedPart);
+            if(success)
+            {
+                SoundEffectsManager.Instance.PlayDrop();
+                isHoldingPart = false;
+                SelectedPart = null;
+            }
         }
         else
         {
+            SoundEffectsManager.Instance.PlayDrop();
+            isHoldingPart = false;
             spawners[playerName].AddPartToMachine(SelectedPart,"Part returned to Inventory");
+            SelectedPart = null;
         }
 
-        SelectedPart = null;
     }
 
     private void FindNearestPart()

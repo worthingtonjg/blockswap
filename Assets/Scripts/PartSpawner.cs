@@ -52,9 +52,13 @@ public class PartSpawner : MonoBehaviour
         }
     }
 
-    public void UpdatePartCount()
+    public int CalcPartCount()
     {
-        PartCount.text = (PartsInMachine.Count + PartsOnConveyer.Count + PartsInPlay.Count).ToString();
+        var count = (PartsInMachine.Count + PartsOnConveyer.Count + PartsInPlay.Count);
+        
+        PartCount.text = count.ToString();
+
+        return count;
     }
 
     public IEnumerator ShowMessage(string message, int penalty = 0)
@@ -83,12 +87,12 @@ public class PartSpawner : MonoBehaviour
 
         PartsInPlay.Add(part);
 
-        UpdatePartCount();
+        CalcPartCount();
     }
 
     public void AddPartToMachine(GameObject part, string message = null, int? penalty = null)
     {
-        //print($"AddPartToMachine: {Owner}");
+        part.transform.SetParent(null);
         part.transform.position = new Vector3(1000,1000,1000);
 
         var partComponent = part.GetComponent<Part>();
@@ -106,7 +110,7 @@ public class PartSpawner : MonoBehaviour
             StartCoroutine(ShowMessage(message, penalty ?? 0));
         }
 
-        UpdatePartCount();
+        CalcPartCount();
     }
 
     public void TakePartFromConveyer(GameObject part)
@@ -114,7 +118,7 @@ public class PartSpawner : MonoBehaviour
         PartsOnConveyer.Remove(part);
         PartsInPlay.Add(part);
 
-        UpdatePartCount();
+        CalcPartCount();
     }
 
     public GameObject MachineToConveyer()
@@ -127,7 +131,7 @@ public class PartSpawner : MonoBehaviour
         PartsInMachine.Remove(part);
         PartsOnConveyer.Insert(0, part);
 
-        UpdatePartCount();
+        CalcPartCount();
 
         return part;
     }
@@ -142,7 +146,7 @@ public class PartSpawner : MonoBehaviour
         PartsOnConveyer.Remove(part);
         PartsInMachine.Insert(0, part);
 
-        UpdatePartCount();
+        CalcPartCount();
 
         return part;
     }
@@ -153,7 +157,7 @@ public class PartSpawner : MonoBehaviour
 
         PartsInPlay.Remove(part);
 
-        UpdatePartCount();
+        CalcPartCount();
     }
 }
 

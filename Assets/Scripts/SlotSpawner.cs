@@ -29,11 +29,13 @@ public class SlotSpawner : MonoBehaviour
         slots.Insert(0, slotComponent);
     }
 
-    public void AddPartToSlot(GameObject part)
+    public bool AddPartToSlot(GameObject part)
     {
         var slot = FindSlot();
-        if(slot == null) return;
+        if(slot == null) return false;
         
+        part.transform.SetParent(null);
+
         slot.Occupied = true;
 
         part.transform.position = slot.transform.position;
@@ -43,6 +45,8 @@ public class SlotSpawner : MonoBehaviour
 
         var partComponent = part.GetComponent<Part>();
         partComponent.CanSelect = false;
+
+        return true;
     }
 
     public void RemoveSlot(Slot slot)

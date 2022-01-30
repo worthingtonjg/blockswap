@@ -136,5 +136,15 @@ public class PartsManager : MonoBehaviour
             spawners[partComponent.Owner].AddPartToMachine(part, "Invalid Part Penalty: +2 Parts", 2);
             SoundEffectsManager.Instance.PlayBadMatch();
         }
+
+        if(spawners[partComponent.Owner].CalcPartCount() == 0)
+        {
+            ShowGameOver();
+        }
+    }
+
+    private void ShowGameOver()
+    {
+
     }
 }
