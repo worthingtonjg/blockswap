@@ -8884,7 +8884,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 475f4837af487ce4a9e68bb227455e4c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 0.081
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -11526,6 +11526,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4534899866530737613, guid: a51310bb24fbbdc488eeac58242a46a3, type: 3}
+      propertyPath: beep1
+      value: 
+      objectReference: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+    - target: {fileID: 4534899866530737613, guid: a51310bb24fbbdc488eeac58242a46a3, type: 3}
+      propertyPath: beep2
+      value: 
+      objectReference: {fileID: 8300000, guid: 7478151cf36724a7dada558f746c3633, type: 3}
+    - target: {fileID: 4534899866530737613, guid: a51310bb24fbbdc488eeac58242a46a3, type: 3}
       propertyPath: CountDown
       value: 
       objectReference: {fileID: 1880321020}
@@ -11533,6 +11541,10 @@ PrefabInstance:
       propertyPath: CountDownCanvas
       value: 
       objectReference: {fileID: 729946045}
+    - target: {fileID: 6863048396899662191, guid: a51310bb24fbbdc488eeac58242a46a3, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a51310bb24fbbdc488eeac58242a46a3, type: 3}
 --- !u!1001 &4612923582684781261
