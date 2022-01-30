@@ -44,8 +44,6 @@ public class CameraController : MonoBehaviour
     private void SetCameraPosition(int cameraPosition) 
     {
         LastPlayedPart = WhichPart(cameraPosition);
-        Debug.Log("LastPlayedPart is " + LastPlayedPart.Color + " " + LastPlayedPart.Shape);
-        //discardPileScript.LastPlayedPart(LastPlayedPart);
         transform.position = new Vector3(cameraPosition * gap - offset, transform.position.y, transform.position.z);
     }
 
