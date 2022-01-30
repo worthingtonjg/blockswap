@@ -73,6 +73,8 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveCharacter()
     {
+        if(!PartsManager.Instance.GameStarted) return;
+        
         Vector3 moveDir = transform.forward * (Input.GetAxis(tag+"Vertical")+Input.GetAxis(tag+"VerticalJoystick")) * moveSpeed;
         
         moveDir += transform.right * (Input.GetAxis(tag+"Horizontal")+Input.GetAxis(tag+"HorizontalJoystick")) * moveSpeed;        

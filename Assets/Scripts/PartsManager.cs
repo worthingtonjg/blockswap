@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class PartsManager : MonoBehaviour
 {
+    public bool GameStarted = false;
+    public GameObject CountDownCanvas;
+    public TMP_Text CountDown;
+    
     public List<GameObject> PartPrefabs;
 
     public List<GameObject> AvialableParts;
@@ -38,6 +43,21 @@ public class PartsManager : MonoBehaviour
     {
         InitializeParts();
         InitializeSpawners();
+        StartCoroutine(CountDownToStart());
+    }
+
+    private IEnumerator CountDownToStart()
+    {
+        CountDown.text = "Starting in 3 ... ";
+        yield return new WaitForSeconds(1f);
+        CountDown.text = "Starting in 2 ... ";
+        yield return new WaitForSeconds(1f);
+        CountDown.text = "Starting in 1 ... ";
+        yield return new WaitForSeconds(1f);
+        CountDown.text = "Play!";
+        yield return new WaitForSeconds(1f);        
+        CountDownCanvas.SetActive(false);
+        GameStarted = true;
     }
 
     private void InitializeParts()
