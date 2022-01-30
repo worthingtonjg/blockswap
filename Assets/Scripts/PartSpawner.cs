@@ -85,7 +85,10 @@ public class PartSpawner : MonoBehaviour
     public GameObject MachineToConveyer()
     {
         var part = PartsInMachine.LastOrDefault();
+        if(part == null) return null;
 
+        part.GetComponent<Part>().CanSelect = true;
+        
         PartsInMachine.Remove(part);
         PartsOnConveyer.Insert(0, part);
 
@@ -111,6 +114,8 @@ public class PartSpawner : MonoBehaviour
 
     public void RemovePartFromPlay(GameObject part)
     {
+        part.transform.position = new Vector3(1000,1000,1000);
+
         PartsInPlay.Remove(part);
 
         UpdatePartCount();

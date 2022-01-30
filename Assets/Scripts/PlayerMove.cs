@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public EnumPlayer playerName;
     public List<GameObject> NearParts;
     public GameObject NearestPart;
     public GameObject SelectedPart;
     public float rotationSpeed = 4f;
     public float moveSpeed = 25f;
-    public EnumPlayer playerName;
+    public float dropRange = 3f;
 
     private CharacterController characterController;
     private float yaw = 0f;
@@ -80,8 +81,8 @@ public class PlayerMove : MonoBehaviour
             isHoldingPart = false;
 
             float distanceToConveyor = Mathf.Abs(transform.position.x - discardPartsConveyor.transform.position.x);
-
-            if(distanceToConveyor < 2f)
+            print($"distanceToConveyor: {distanceToConveyor}");
+            if(distanceToConveyor < dropRange)
             {
                 slotSpawner.AddPartToSlot(SelectedPart);
             }

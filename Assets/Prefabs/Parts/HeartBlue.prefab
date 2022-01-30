@@ -224,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 7867335340595014114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 407417372005106940}
   m_Father: {fileID: 0}
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
-  scrollSpeed: 0.65
+  scrollSpeed: 2
   rotationSpeed: 0.1
 --- !u!114 &2604659712760468570
 MonoBehaviour:
@@ -335,3 +335,4 @@ MonoBehaviour:
   Color: 0
   Shape: 1
   Selector: {fileID: 797864195207162468}
+  CanSelect: 1
