@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PartsManager : MonoBehaviour
 {
     public bool GameStarted = false;
     public GameObject CountDownCanvas;
     public TMP_Text CountDown;
-    
+
+    public GameObject GameOverCanvas;
+    public TMP_Text GameOverText;
+
     public List<GameObject> PartPrefabs;
 
     public List<GameObject> AvialableParts;
@@ -139,12 +143,27 @@ public class PartsManager : MonoBehaviour
 
         if(spawners[partComponent.Owner].CalcPartCount() == 0)
         {
-            ShowGameOver();
+            ShowGameOver(partComponent.Owner);
         }
     }
 
-    private void ShowGameOver()
+    private void ShowGameOver(EnumPlayer winner)
     {
+        GameStarted = false;
+        GameOverCanvas.SetActive(true);
+        if(winner == EnumPlayer.P1)
+        {
+            GameOverText.text = "Player 1 Wins";
+        }
+        else
+        {
+            GameOverText.text = "Playher 2 Wins";
+        }
+        SoundEffectsManager.Instance.PlayGameOver();
+    }
 
+    public void LoadTitleScene()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
 }
