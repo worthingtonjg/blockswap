@@ -12249,7 +12249,7 @@ PrefabInstance:
       objectReference: {fileID: 1354655777}
     - target: {fileID: 4534899866530737613, guid: a51310bb24fbbdc488eeac58242a46a3, type: 3}
       propertyPath: StartingCount
-      value: 1
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4534899866530737613, guid: a51310bb24fbbdc488eeac58242a46a3, type: 3}
       propertyPath: GameOverCanvas
