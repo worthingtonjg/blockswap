@@ -6,6 +6,8 @@ TagManager:
   tags:
   - P1
   - P2
+  - Slot
+  - DiscardPartsConveyor
   layers:
   - Default
   - TransparentFX

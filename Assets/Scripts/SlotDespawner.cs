@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class SlotDespawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private SlotSpawner spawner;
+
+    private void Start()
     {
-        
+        spawner = FindObjectOfType<SlotSpawner>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.tag != "Slot") return;
+
+        var slotComponent = other.gameObject.GetComponent<Slot>();
+        spawner.RemoveSlot(slotComponent);
+        GameObject.Destroy(other.gameObject);
     }
+
 }

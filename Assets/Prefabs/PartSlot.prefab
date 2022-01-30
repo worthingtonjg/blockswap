@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 9087294284005941542}
   - component: {fileID: 9087294284005941537}
   - component: {fileID: 2151926342766687609}
+  - component: {fileID: 6331144032153842450}
   m_Layer: 0
   m_Name: PartSlot
-  m_TagString: Untagged
+  m_TagString: Slot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,3 +113,15 @@ MonoBehaviour:
   destination: {fileID: 0}
   scrollSpeed: 0.65
   rotationSpeed: 0.1
+--- !u!114 &6331144032153842450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9087294284005941536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37de9b139e89cd849bc6d2ee6570e7f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

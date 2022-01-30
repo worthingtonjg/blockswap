@@ -97,10 +97,12 @@ public class PartsManager : MonoBehaviour
         var partComponent = part.GetComponent<Part>();
         if(match)
         {
+            print("matched");
             spawners[partComponent.Owner].RemovePartFromPlay(part);
         }
         else
         {
+            print("not matched");
             spawners[partComponent.Owner].AddPartToMachine(part);
         }
     }
