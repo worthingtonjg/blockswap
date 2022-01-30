@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
     {
         get 
         {
-            if(_instance)
+            if(_instance == null)
             {
                 _instance = GameObject.FindObjectOfType<CameraController>();
             }
