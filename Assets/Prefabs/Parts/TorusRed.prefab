@@ -128,7 +128,7 @@ Transform:
   m_GameObject: {fileID: 4029515168268720497}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 7379171061229739028}
   m_Father: {fileID: 0}
@@ -141,7 +141,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4029515168268720497}
-  m_Mesh: {fileID: 4300000, guid: bb85ee45ccfaa428badb3dd1de02633b, type: 2}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &4506097796782924463
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7e13974f42502404f97bd194ed2c200d, type: 2}
+  - {fileID: 2100000, guid: f26258fa824cc34418c2720a443d7f16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 0}
-  scrollSpeed: 0.65
+  scrollSpeed: 2
   rotationSpeed: 0.1
 --- !u!114 &2456596468538067778
 MonoBehaviour:
@@ -226,6 +226,7 @@ MonoBehaviour:
   Color: 2
   Shape: 3
   Selector: {fileID: 3390843650487016276}
+  CanSelect: 1
 --- !u!65 &7383696041395724494
 BoxCollider:
   m_ObjectHideFlags: 0
