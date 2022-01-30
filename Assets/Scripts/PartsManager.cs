@@ -157,7 +157,7 @@ public class PartsManager : MonoBehaviour
         }
         else
         {
-            GameOverText.text = "Playher 2 Wins";
+            GameOverText.text = "Player 2 Wins";
         }
         SoundEffectsManager.Instance.PlayGameOver();
     }
