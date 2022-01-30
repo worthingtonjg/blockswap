@@ -72,6 +72,7 @@ public class PlayerMove : MonoBehaviour
                 SelectedPart.GetComponent<Part>().ToggleSelected(false);
                 spawners[playerName].TakePartFromConveyer(SelectedPart);
                 isHoldingPart = true;
+                SelectedPart.transform.position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
             }
         }
         else if (isHoldingPart && (playerName == EnumPlayer.P1 && Input.GetButtonDown("P1Pickup") ||
