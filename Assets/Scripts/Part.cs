@@ -14,4 +14,9 @@ public class Part : MonoBehaviour
     {
         Selector.SetActive(selected);
     }
+
+    void Update()
+    {
+        Selector.transform.LookAt(Camera.main.transform.position, Vector3.up);
+    }
 }
