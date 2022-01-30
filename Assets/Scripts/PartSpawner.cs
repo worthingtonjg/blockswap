@@ -39,7 +39,7 @@ public class PartSpawner : MonoBehaviour
 
     private void SpawnNextPartInMachine()
     {
-        print($"SpawnNextPartInMachine: {PartsInMachine.Count}");
+        //print($"SpawnNextPartInMachine: {PartsInMachine.Count}");
         var part = MachineToConveyer();
 
         if(part != null)
@@ -58,7 +58,7 @@ public class PartSpawner : MonoBehaviour
 
     public void AddPartToMachine(GameObject part)
     {
-        print($"AddPartToMachine: {Owner}");
+        //print($"AddPartToMachine: {Owner}");
         part.transform.position = new Vector3(1000,1000,1000);
 
         var partComponent = part.GetComponent<Part>();
@@ -68,7 +68,7 @@ public class PartSpawner : MonoBehaviour
         partMoveComponent.destination = null;
         
         PartsInMachine.Insert(0, part);
-        print($"PartsInMachine: {PartsInMachine.Count}");
+        //print($"PartsInMachine: {PartsInMachine.Count}");
 
         UpdatePartCount();
     }

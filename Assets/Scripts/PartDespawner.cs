@@ -22,18 +22,18 @@ public class PartDespawner : MonoBehaviour
         
     }
 
-     private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         var part = other.gameObject.GetComponent<Part>();
         if(part != null)
         {
             
-            print($"ConveyerToMachine: {other.gameObject.name}");
+            //print($"ConveyerToMachine: {other.gameObject.name}");
             spawners[Owner].ConveyerToMachine(other.gameObject);
         }
         else
         {
-            print($"Ignored: {other.gameObject.name}");
+            //print($"Ignored: {other.gameObject.name}");
         }
     }
 }

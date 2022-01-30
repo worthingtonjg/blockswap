@@ -1046,6 +1046,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81902c40e39de54a82c40be20fffce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NearParts: []
+  NearestPart: {fileID: 0}
   rotationSpeed: 4
   moveSpeed: 10
 --- !u!143 &458763150
@@ -1558,6 +1560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81902c40e39de54a82c40be20fffce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NearParts: []
+  NearestPart: {fileID: 0}
   rotationSpeed: 4
   moveSpeed: 10
 --- !u!143 &1138910030
