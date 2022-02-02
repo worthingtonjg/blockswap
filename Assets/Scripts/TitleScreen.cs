@@ -13,12 +13,20 @@ public class TitleScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyUp(KeyCode.Return))
+        { 
+            LoadGameScene();
+        }
     }
 
     public void LoadGameScene()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void LoadOptionsScene()
+    {
+        SceneManager.LoadScene("OptionsScene");
     }
 
     public void ExitGame()
