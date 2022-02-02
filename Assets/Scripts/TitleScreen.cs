@@ -20,4 +20,9 @@ public class TitleScreen : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
