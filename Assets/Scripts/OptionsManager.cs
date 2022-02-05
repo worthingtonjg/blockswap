@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class OptionsManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class OptionsManager : MonoBehaviour
     public GameObject GameMode2Button;
     public GameObject GameModeHighlight;
     public int GameMode;
+    public Toggle SoundToggle;
+    public bool SoundOption;
 
      void Start()
     {
@@ -31,6 +34,16 @@ public class OptionsManager : MonoBehaviour
             PlayerPrefs.SetInt("GameMode", 1);
         }
         HighlightGameMode();
+        if (PlayerPrefs.HasKey("SoundOption"))
+        {
+            SoundOption = PlayerPrefs.GetInt("SoundOption") == 1;
+        }
+        else
+        {
+            SoundOption = true;
+            PlayerPrefs.SetInt("SoundOption", 1);
+        }
+        SoundToggle.isOn = SoundOption;
     }
 
     private void Update() 
@@ -80,6 +93,21 @@ public class OptionsManager : MonoBehaviour
             break;
         }
     }
+
+    public void SetSoundOptions()
+    {
+        if (SoundToggle.isOn)
+        {
+            SoundOption = true;
+            PlayerPrefs.SetInt("SoundOption", 1);
+        }
+        else
+        {
+            SoundOption = false;
+            PlayerPrefs.SetInt("SoundOption", 0);
+        }
+    }
+
     public void BackButtonClick()
     {
         SceneManager.LoadScene("TitleScene");
