@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour
 {
+    public Camera MainCamera;
     public GameObject Player1Button;
     public GameObject Player2Button;
     public GameObject PlayerCountHighlight;
@@ -17,9 +18,11 @@ public class OptionsManager : MonoBehaviour
     public int GameMode;
     public Toggle SoundToggle;
     public bool SoundOption;
+    public Toggle MusicToggle;
+    public bool MusicOption;
 
      void Start()
-    {
+    {        
         PlayerCount = PlayerPrefs.GetInt("PlayerCount");
         if (PlayerCount <= 0)
         {
@@ -34,6 +37,7 @@ public class OptionsManager : MonoBehaviour
             PlayerPrefs.SetInt("GameMode", 1);
         }
         HighlightGameMode();
+
         if (PlayerPrefs.HasKey("SoundOption"))
         {
             SoundOption = PlayerPrefs.GetInt("SoundOption") == 1;
@@ -43,7 +47,21 @@ public class OptionsManager : MonoBehaviour
             SoundOption = true;
             PlayerPrefs.SetInt("SoundOption", 1);
         }
-        SoundToggle.isOn = SoundOption;
+        SoundToggle.isOn = SoundOption;    
+
+        AudioSource audio = MainCamera.GetComponent<AudioSource>();
+        if (PlayerPrefs.HasKey("MusicOption"))
+        {
+            audio.UnPause();
+            MusicOption = PlayerPrefs.GetInt("MusicOption") == 1;
+        }
+        else
+        {
+            audio.Pause();
+            MusicOption = true;
+            PlayerPrefs.SetInt("MusicOption", 1);
+        }
+        MusicToggle.isOn = MusicOption;
     }
 
     private void Update() 
@@ -105,6 +123,23 @@ public class OptionsManager : MonoBehaviour
         {
             SoundOption = false;
             PlayerPrefs.SetInt("SoundOption", 0);
+        }
+    }
+
+    public void SetMusicOptions()
+    {
+        AudioSource audio = MainCamera.GetComponent<AudioSource>();        
+        if (MusicToggle.isOn)
+        {
+            audio.UnPause();
+            MusicOption = true;
+            PlayerPrefs.SetInt("MusicOption", 1);
+        }
+        else
+        {
+            audio.Pause();
+            MusicOption = false;
+            PlayerPrefs.SetInt("MusicOption", 0);
         }
     }
 
