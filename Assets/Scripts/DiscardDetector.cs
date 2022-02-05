@@ -16,18 +16,21 @@ public class DiscardDetector : MonoBehaviour
 
     void OnTriggerEnter(Collider partCollided) 
     {
-        var part = partCollided.gameObject.GetComponent<Part>();
-        if (part == null) return;
-
-        var lastPlayedPart = CameraController.Instance.LastPlayedPart;
-
-        bool match = part.Color == lastPlayedPart.Color || part.Shape == lastPlayedPart.Shape;
-
-        if (match) 
+        if (partsManagerScript.GameStarted)
         {
-            CameraController.Instance.PointToPart(part);
+            var part = partCollided.gameObject.GetComponent<Part>();
+            if (part == null) return;
+
+            var lastPlayedPart = CameraController.Instance.LastPlayedPart;
+
+            bool match = part.Color == lastPlayedPart.Color || part.Shape == lastPlayedPart.Shape;
+
+            if (match) 
+            {
+                CameraController.Instance.PointToPart(part);
+            }
+            
+            partsManagerScript.ProcessPart(partCollided.gameObject, match);
         }
-        
-        partsManagerScript.ProcessPart(partCollided.gameObject, match);
     }
 }
