@@ -131,13 +131,13 @@ public class PartsManager : MonoBehaviour
         var partComponent = part.GetComponent<Part>();
         if(match)
         {
-            print("matched");
+            //print("matched");
             spawners[partComponent.Owner].RemovePartFromPlay(part);
             SoundEffectsManager.Instance.PlayGoodMatch();
         }
         else
         {
-            print("not matched");
+            //print("not matched");
             spawners[partComponent.Owner].AddPartToMachine(part, "Invalid Part Penalty: +2 Parts", 2);
             SoundEffectsManager.Instance.PlayBadMatch();
         }
