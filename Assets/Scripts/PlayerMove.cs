@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     public float rotationSpeed = 4f;
     public float moveSpeed = 25f;
     public GameObject Button;
+    public Camera MainCamera;
 
     private CharacterController characterController;
     private float yaw = 0f;
@@ -20,9 +21,12 @@ public class PlayerMove : MonoBehaviour
     private SlotSpawner slotSpawner;
     private GameObject discardPartsConveyor;
     private Dictionary<EnumPlayer, PartSpawner> spawners;
+    private float P1CameraPosition = -13f;
+    private float P2CamerPosition = -4f;
 
     private GameObject DropZone;
     private bool CanDropOnMainConveyor = false;
+    private int PlayerCount;
 
     void Awake()
     {
@@ -32,6 +36,20 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerCount = PlayerPrefs.GetInt("PlayerCount");
+        if (PlayerCount == 1)
+        {
+            MainCamera.transform.position = new Vector3(P1CameraPosition, MainCamera.transform.position.y, MainCamera.transform.position.z);
+            if (playerName == EnumPlayer.P2)
+            {
+                return;
+            }
+        }
+        else
+        {
+            MainCamera.transform.position = new Vector3(P2CamerPosition, MainCamera.transform.position.y, MainCamera.transform.position.z);
+        }
+
         characterController = GetComponent<CharacterController>();
         slotSpawner = FindObjectOfType<SlotSpawner>();
         discardPartsConveyor = GameObject.FindGameObjectWithTag("DiscardPartsConveyor");
@@ -45,28 +63,31 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveCharacter();
-        FindNearestPart();
-
-        if(Input.GetButtonDown(tag+"Pickup"))
+        if (PlayerCount == 2 || playerName == EnumPlayer.P1)
         {
-            if (!isHoldingPart)
+            MoveCharacter();
+            FindNearestPart();
+
+            if(Input.GetButtonDown(tag+"Pickup"))
             {
-                if(canPressButton)
+                if (!isHoldingPart)
                 {
-                    PressNewPartButton();
-                } 
-                else 
-                {
-                    if (NearestPart != null)
+                    if(canPressButton)
                     {
-                        PickupPartFromConveyor();
+                        PressNewPartButton();
+                    } 
+                    else 
+                    {
+                        if (NearestPart != null)
+                        {
+                            PickupPartFromConveyor();
+                        }
                     }
                 }
-            }
-            else
-            {
-                DropPart();
+                else
+                {
+                    DropPart();
+                }
             }
         }
     }
