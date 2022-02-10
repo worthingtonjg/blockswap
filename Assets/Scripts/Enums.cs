@@ -24,3 +24,9 @@ public enum EnumPartColor
     Red,
     Yellow,
 }
+
+public enum EnumGameMode
+{
+    ClearShapes,
+    TimedGame,
+}

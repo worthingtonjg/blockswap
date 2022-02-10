@@ -10,6 +10,9 @@ public class PartsManager : MonoBehaviour
     public bool GameStarted = false;
     public GameObject CountDownCanvas;
     public TMP_Text CountDown;
+    public TMP_Text TimerText;
+    public TMP_Text P1Score;
+    public TMP_Text P2Score;
 
     public GameObject GameOverCanvas;
     public GameObject RedWinsImage;
@@ -24,6 +27,8 @@ public class PartsManager : MonoBehaviour
     public int CountOfEach = 5;
 
     public int StartingCount = 5;
+    private EnumGameMode GameMode;
+    private float Timer;
 
     private Dictionary<EnumPlayer, PartSpawner> spawners;
 
@@ -44,11 +49,33 @@ public class PartsManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         InitializeParts();
         InitializeSpawners();
         StartCoroutine(CountDownToStart());
+        int gm = PlayerPrefs.GetInt("GameMode");
+        if (gm <= 0) // not set or set to 0
+        {
+            GameMode = EnumGameMode.ClearShapes;
+        } else { // set to 1 or greater
+            GameMode = EnumGameMode.TimedGame;
+        }
+        PlayerPrefs.SetInt("GameMode", (int)GameMode);
+    }
+
+    private void Update() 
+    {
+        if (GameStarted && GameMode == EnumGameMode.TimedGame && Timer >= 0)
+        {
+            // Display the game timer
+            Timer -= Time.deltaTime;
+            TimerText.text = ((int)Timer).ToString();
+            if (Timer < 0) // Times up
+            {
+                WhoWon();
+            }
+        }    
     }
 
     private IEnumerator CountDownToStart()
@@ -71,6 +98,7 @@ public class PartsManager : MonoBehaviour
             yield return new WaitForSeconds(1f);        
             CountDownCanvas.SetActive(false);
             GameStarted = true;
+            Timer = 15f;
         }
     }
 
@@ -142,7 +170,7 @@ public class PartsManager : MonoBehaviour
             SoundEffectsManager.Instance.PlayBadMatch();
         }
 
-        if(spawners[partComponent.Owner].CalcPartCount() == 0)
+        if(GameMode == EnumGameMode.ClearShapes && spawners[partComponent.Owner].CalcPartCount() == 0)
         {
             ShowGameOver(partComponent.Owner);
         }
@@ -161,6 +189,22 @@ public class PartsManager : MonoBehaviour
             RedWinsImage.SetActive(true);
         }
         SoundEffectsManager.Instance.PlayGameOver();
+    }
+
+    private void WhoWon() 
+    {
+        if(GameMode == EnumGameMode.TimedGame)
+        {
+            // Check score
+            if (int.Parse(P2Score.text) > int.Parse(P1Score.text))
+            {
+                ShowGameOver(EnumPlayer.P2);
+            }
+            else
+            {
+                ShowGameOver(EnumPlayer.P1); // default is player 1 wins
+            }
+        }
     }
 
     public void LoadTitleScene()

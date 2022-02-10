@@ -24,17 +24,20 @@ public class OptionsManager : MonoBehaviour
      void Start()
     {        
         PlayerCount = PlayerPrefs.GetInt("PlayerCount");
-        if (PlayerCount <= 0)
+        if (PlayerCount != 1) // not set or set to 2 or greater
         {
             PlayerCount = 2;
             PlayerPrefs.SetInt("PlayerCount", 2);
         }
         HighlightPlayerCount();
-        GameMode = PlayerPrefs.GetInt("GameMode");
-        if (GameMode <= 0)
+        GameMode = PlayerPrefs.GetInt("GameMode"); 
+        if (GameMode <= 0) // not set or set to 0
         {
+            GameMode = 0;
+            PlayerPrefs.SetInt("GameMode", (int)EnumGameMode.ClearShapes);
+        } else { // set to 1 or greater
             GameMode = 1;
-            PlayerPrefs.SetInt("GameMode", 1);
+            PlayerPrefs.SetInt("GameMode", (int)EnumGameMode.TimedGame);
         }
         HighlightGameMode();
 
@@ -94,8 +97,13 @@ public class OptionsManager : MonoBehaviour
 
     public void SetGameMode(int num)
     {
-        GameMode = num;
-        PlayerPrefs.SetInt("GameMode", num);
+        if (num <= 1)
+        {
+            GameMode = (int)EnumGameMode.ClearShapes;
+        } else {
+            GameMode = (int)EnumGameMode.TimedGame;
+        }
+        PlayerPrefs.SetInt("GameMode", GameMode);
         HighlightGameMode();
     }
 
@@ -103,11 +111,14 @@ public class OptionsManager : MonoBehaviour
     {
         switch(GameMode)
         {
-            case 1:
+            case 0: // Clear Shapes
                 GameModeHighlight.transform.position = GameMode1Button.transform.position;
             break;
-            case 2:
+            case 1: // Timed Game
                 GameModeHighlight.transform.position = GameMode2Button.transform.position;
+            break;
+            default:
+                print("Unknown Game Mode value: {GameMode}");
             break;
         }
     }
