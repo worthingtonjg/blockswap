@@ -13,27 +13,25 @@ public class PartsManager : MonoBehaviour
     public TMP_Text TimerText;
     public TMP_Text P1Score;
     public TMP_Text P2Score;
+    public int PlayerCount;
+    public EnumGameMode GameMode;
+    public float Timer;
 
     public GameObject GameOverCanvas;
     public GameObject RedWinsImage;
     public GameObject BlueWinsImage;
+    public GameObject TieImage;
 
     public List<GameObject> PartPrefabs;
-
-    public List<GameObject> AvialableParts;
-
+    public List<GameObject> AvailableParts;
     public List<GameObject> UsedParts;
 
     public int CountOfEach = 5;
-
-    public int StartingCount = 5;
-    private EnumGameMode GameMode;
-    private float Timer;
-
+    public int StartingCount = 15;
+    
     private Dictionary<EnumPlayer, PartSpawner> spawners;
 
     private static PartsManager _instance;
-
     public static PartsManager Instance 
     {
         get 
@@ -53,15 +51,8 @@ public class PartsManager : MonoBehaviour
     {
         InitializeParts();
         InitializeSpawners();
+        InitializeGame();
         StartCoroutine(CountDownToStart());
-        int gm = PlayerPrefs.GetInt("GameMode");
-        if (gm <= 0) // not set or set to 0
-        {
-            GameMode = EnumGameMode.ClearShapes;
-        } else { // set to 1 or greater
-            GameMode = EnumGameMode.TimedGame;
-        }
-        PlayerPrefs.SetInt("GameMode", (int)GameMode);
     }
 
     private void Update() 
@@ -98,14 +89,43 @@ public class PartsManager : MonoBehaviour
             yield return new WaitForSeconds(1f);        
             CountDownCanvas.SetActive(false);
             GameStarted = true;
-            Timer = 15f;
+        }
+    }
+
+    private void InitializeGame()
+    {
+        int gm = PlayerPrefs.GetInt("GameMode");
+        if (gm <= 0) // not set or set to 0
+        {
+            GameMode = EnumGameMode.ClearShapes;
+        } else { // set to 1 or greater
+            GameMode = EnumGameMode.TimedGame;
+        }
+        PlayerCount = PlayerPrefs.GetInt("PlayerCount");
+        PlayerPrefs.SetInt("GameMode", (int)GameMode);
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "GameScene")
+        {
+            if(GameMode == EnumGameMode.TimedGame)
+            {
+                P1Score.text = "0";
+                P2Score.text = "0";
+                Timer = 60f;
+                TimerText.text = Timer.ToString();
+            }
+            else
+            {
+                P1Score.text = StartingCount.ToString();
+                P2Score.text = StartingCount.ToString();
+                TimerText.text = "";
+            }    
         }
     }
 
     private void InitializeParts()
     {
         // Initialize Parts
-        AvialableParts = new List<GameObject>();
+        AvailableParts = new List<GameObject>();
         UsedParts = new List<GameObject>();
 
         foreach (var prefab in PartPrefabs)
@@ -113,7 +133,7 @@ public class PartsManager : MonoBehaviour
             for (int i = 0; i < CountOfEach; i++)
             {
                 var instance = GameObject.Instantiate(prefab, new Vector3(1000, 1000, 1000), Quaternion.identity);
-                AvialableParts.Add(instance);
+                AvailableParts.Add(instance);
             }
         }
     }
@@ -137,17 +157,17 @@ public class PartsManager : MonoBehaviour
 
     public GameObject TakePart()
     {
-        if(AvialableParts.Count == 0)
+        if(AvailableParts.Count == 0)
         {
-            AvialableParts = UsedParts.ToList();
+            AvailableParts = UsedParts.ToList();
             UsedParts = new List<GameObject>();
         }
 
-        if(AvialableParts.Count == 0) return null;
+        if(AvailableParts.Count == 0) return null;
 
-        int partIndex = Random.Range(0, AvialableParts.Count);
-        var part = AvialableParts[partIndex];
-        AvialableParts.Remove(part);
+        int partIndex = Random.Range(0, AvailableParts.Count);
+        var part = AvailableParts[partIndex];
+        AvailableParts.Remove(part);
 
         return part;
     } 
@@ -162,6 +182,19 @@ public class PartsManager : MonoBehaviour
             //print("matched");
             spawners[partComponent.Owner].RemovePartFromPlay(part);
             SoundEffectsManager.Instance.PlayGoodMatch();
+            if (GameMode == EnumGameMode.TimedGame)
+            {
+                if (partComponent.Owner == EnumPlayer.P1)
+                {
+                    int score = int.Parse(P1Score.text) + 1;
+                    P1Score.text = score.ToString();
+                }
+                else
+                {
+                    int score = int.Parse(P2Score.text) + 1;
+                    P2Score.text = score.ToString();
+                }
+            }
         }
         else
         {
@@ -180,30 +213,35 @@ public class PartsManager : MonoBehaviour
     {
         GameStarted = false;
         GameOverCanvas.SetActive(true);
-        if(winner == EnumPlayer.P1)
+        if(winner == EnumPlayer.P1 || PlayerCount == 1)
         {
             BlueWinsImage.SetActive(true);
         }
-        else
+        else if (winner == EnumPlayer.P2)
         {
             RedWinsImage.SetActive(true);
+        }
+        else
+        {
+            TieImage.SetActive(true);
         }
         SoundEffectsManager.Instance.PlayGameOver();
     }
 
     private void WhoWon() 
     {
-        if(GameMode == EnumGameMode.TimedGame)
+        // Check score
+        if (int.Parse(P2Score.text) > int.Parse(P1Score.text))
         {
-            // Check score
-            if (int.Parse(P2Score.text) > int.Parse(P1Score.text))
-            {
-                ShowGameOver(EnumPlayer.P2);
-            }
-            else
-            {
-                ShowGameOver(EnumPlayer.P1); // default is player 1 wins
-            }
+            ShowGameOver(EnumPlayer.P2); // Player 2 wins
+        }
+        else if (int.Parse(P1Score.text) > int.Parse(P2Score.text))
+        {
+            ShowGameOver(EnumPlayer.P1); // Player 1 wins
+        }
+        else
+        {
+            ShowGameOver(EnumPlayer.Unassigned); // it's a tie
         }
     }
 

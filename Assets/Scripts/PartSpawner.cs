@@ -20,6 +20,8 @@ public class PartSpawner : MonoBehaviour
 
     public EnumPlayer Owner;
 
+    private EnumGameMode GameMode;
+
     void Awake()
     {
         PartsInMachine = new List<GameObject>();
@@ -31,6 +33,7 @@ public class PartSpawner : MonoBehaviour
     void Start()
     {
         InvokeRepeating("SpawnNextPartInMachine", 0f, SpawnRate);
+        GameMode = (EnumGameMode)PlayerPrefs.GetInt("GameMode");
     }
 
     void Update()
@@ -56,7 +59,10 @@ public class PartSpawner : MonoBehaviour
     {
         var count = (PartsInMachine.Count + PartsOnConveyer.Count + PartsInPlay.Count);
         
-        PartCount.text = count.ToString();
+        if (GameMode == EnumGameMode.ClearShapes)
+        {
+            PartCount.text = count.ToString();
+        }
 
         return count;
     }
