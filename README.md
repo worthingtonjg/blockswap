@@ -27,7 +27,7 @@ Shape Factory is an exciting 2 player factory matching game. Grab a friend and h
 - Jon Worthington (Programming)
 - Andrea Blake (Art and Level Design)
 
-#### Globa Game Jam 2022 Page
+#### Global Game Jam 2022 Page
 
 - [https://globalgamejam.org/2022/games/shape-factory-0](https://globalgamejam.org/2022/games/shape-factory-0)
 
